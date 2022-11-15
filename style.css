@@ -44,8 +44,8 @@ div.content-grid.mdl-grid{
     /*overflow: scroll;*/
 }
 
-.my-batches{
-    height: 80%;
+.outer-container{
+    height: 70%;
 }
 
 .list-container{
@@ -70,4 +70,14 @@ ul.mdl-list{
 
 i.material-icons{
     color: black;
+}
+
+#scanner-container{
+    position: absolute;
+    margin: 50px 7px;
+}
+
+#result{
+    position: absolute;
+    margin-left: 20px;
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maily Butel | Software Portfolio</title>
+    <title>Maily Butel | Barcode Scanner</title>
     <!-- Link css file -->
     <link rel="stylesheet" href="style.css">
     <!-- Link fonts -->
@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!-- NAVIGATION -->
+
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header>
         <div class="nav mdl-grid">
@@ -32,11 +32,13 @@
         <div class="page-content">
             <div class="content-grid mdl-grid">
                 <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--2-offset-desktop mdl-cell--6-col-tablet mdl-cell--1-offset-tablet">
+                    <!-- New Batch button -->
                     <div class="button-container">
                         <button type="button" class="hover-red mdl-button mdl-js-button mdl-button--raised" onclick="newBatch()">New Batch</button>
                     </div>
 
-                    <div class="my-batches">
+                    <!-- List of Batches -->
+                    <div class="outer-container">
                         <h1 class="section-title">Saved Batches</h1>
                         <div class="list-container mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet">
                             <ul class="mdl-list" id="batches-list">
@@ -51,7 +53,7 @@
                     </div>
                 </div>
 
-                <!-- dialog box for adding sprints -->
+                <!-- dialog box for adding a batch -->
                 <dialog class="mdl-dialog">
                     <div class="mdl-dialog__content">
                         <div class="dialog-line mdl-textfield">
@@ -79,7 +81,7 @@
     </main>
     <script src="dialog-polyfill.js"></script>
     <script src="shared.js"></script>
-    <script src="scanner.js"></script>
+    <script src="batchList.js"></script>
 </div>
 
 

@@ -1,68 +1,74 @@
-"use strict";
+let _scannerIsRunning = false;
 
-function newBatch(){
-    let dialog = document.querySelector("dialog");
-    dialog.showModal();
-    dialogPolyfill.registerDialog(dialog);
+function startScanner() {
+    Quagga.init({
+        inputStream: {
+            name: "Live",
+            type: "LiveStream",
+            target: document.querySelector('#scanner-container'),
+            constraints: {
+                width: window.innerWidth-15,
+                height: window.innerHeight*2/3,
+                facingMode: "environment"
+            },
+        },
+        decoder: {
+            readers: ['upc_reader', 'ean_reader'],
+        },
+
+    }, function (err) {
+        if (err) {
+            console.log(err);
+            return
+        }
+
+        Quagga.start();
+
+        // Set flag to is running
+        _scannerIsRunning = true;
+    });
+
+    Quagga.onProcessed(function (result) {
+        let drawingCtx = Quagga.canvas.ctx.overlay,
+            drawingCanvas = Quagga.canvas.dom.overlay;
+
+        if (result) {
+            if (result.boxes) {
+                drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+                result.boxes.filter(function (box) {
+                    return box !== result.box;
+                }).forEach(function (box) {
+                    Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: "green", lineWidth: 2 });
+                });
+            }
+
+            if (result.box) {
+                Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: "#00F", lineWidth: 2 });
+            }
+
+            if (result.codeResult && result.codeResult.code) {
+                Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: 'red', lineWidth: 3 });
+            }
+        }
+    });
+
+    Quagga.onDetected(function (result) {
+        console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
+        Quagga.stop();
+        document.getElementById("scanned-code").parentElement.classList.add("is-dirty");
+        document.getElementById("scanned-code").value = `${result.codeResult.code}`;
+    });
 }
 
-function closeDialog() {
-    let dialog = document.querySelector("dialog");
-    dialog.close();
-    clearInput("batchName");
-}
+document.getElementById("result").style.top = (window.innerHeight*2/3 + 80) + "px";
+startScanner();
 
-function clearInput(id){
-    document.getElementById(id).value = '';
-    document.getElementById(id).parentElement.classList.remove("is-dirty");
-    document.getElementById(id).disabled = false;
-    document.getElementById(id).parentElement.classList.remove("is-invalid");
-}
+// document.getElementById("scanned-code").addEventListener(onclick({
+//     Quagga.stop();
+// }))
 
-function createBatch(){
-    let name = document.getElementById("batchName").value;
-    if (name === "") {
-        document.getElementById("batchName").parentElement.classList.add("is-invalid");
-    }else{
-        let batch = new Batch(name);
-        batchBacklog.addBatch(batch);
-        updateLSData(BATCH_KEY, batchBacklog);
-        let dialog = document.querySelector("dialog");
-        dialog.close();
-        clearInput("batchName");
-        displayBatches();
-        // Go to the new batch's page
-    }
+function addBarcode(){
+    let code = new Barcode(document.getElementById("scanned-code").value, "ean_13");
+    batchBacklog.batches[batchIndex].addBarcode(code);
+    updateLSData(BATCH_KEY, batchBacklog);
 }
-
-function deleteBatch(index){
-    if(confirm(`Are you sure want to delete ${batchBacklog.batches[index].name}?\nDeleted data cannot be recovered.`)){
-        //using function to delete at index
-        batchBacklog.delete(index);
-        //updating local storage
-        updateLSData(BATCH_KEY, batchBacklog);
-        //running the display function with changed PB
-        displayBatches();
-    }
-}
-
-function displayBatches(){
-    let output = "";
-    // Iterate through saved tasks in the backlog
-    for (let i = 0; i < batchBacklog.batches.length; i++) {
-        // Create html to display the task info
-        output += `<li class="list-item mdl-list__item" onclick="">
-                        <span class="mdl-list__item-primary-content">
-                            <span>${batchBacklog.batches[i].name}</span>
-                        </span>
-                        <a class="mdl-list__item-secondary-action"><i class="material-icons" onclick="deleteBatch(${i})">delete</i></a>
-                    </li>`;
-    }
-    if(output === ""){
-        output = `<span class="mdl-layout-title" style="color: black">You have no saved batches.<br>Use the 'NEW BATCH' button below to start adding.</span>`;
-    }
-    // Add to the UI list
-    document.getElementById("batches-list").innerHTML = output;
-}
-
-displayBatches();

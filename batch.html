@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maily Butel | Barcode Scanner</title>
+    <!-- Link css file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Link fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&family=Open+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Link MDL styling -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!-- Link google fonts for icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+<!-- NAVIGATION -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header>
+        <div class="nav mdl-grid">
+            <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--2-offset-desktop mdl-cell--6-col-tablet mdl-cell--1-offset-tablet">
+                <a id="batch-name" class="name-logo font-bold font-italics" href="#">Barcode Scanner</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <div class="content-grid mdl-grid">
+                <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--2-offset-desktop mdl-cell--6-col-tablet mdl-cell--1-offset-tablet">
+                    <div class="button-container">
+                        <button type="button" class="hover-red mdl-button mdl-js-button mdl-button--raised" onclick="newBarcode()">Add Barcode</button>
+                    </div>
+
+                    <div class="outer-container">
+                        <h1 class="section-title">Saved Barcodes</h1>
+                        <div class="list-container mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet">
+                            <ul class="mdl-list" id="barcodes-list">
+                                <li class="list-item mdl-list__item" onclick="">
+                                    <span class="mdl-list__item-primary-content">
+                                        <span>Sprint Name</span>
+                                    </span>
+                                    <a class="mdl-list__item-secondary-action"><i class="material-icons">delete</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- dialog box for adding sprints -->
+                <dialog class="mdl-dialog">
+                    <div class="mdl-dialog__content">
+                        <div class="dialog-line mdl-textfield">
+                            <label class="mdl-typography--title">New Batch</label>
+                        </div>
+                        <!-- Name input -->
+                        <div class="dialog-line mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="batchName">
+                            <label class="mdl-textfield__label" for="batchName">Name*...</label>
+                            <span id="batchNameError" class="mdl-textfield__error">Name required</span>
+                        </div>
+                        <div>
+                            <!-- Buttons to cancel or save -->
+                            <div class="dialog-buttons">
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="closeDialog()">Cancel</button>
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="createBatch()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </dialog>
+
+            </div>
+        </div>
+
+    </main>
+    <script src="dialog-polyfill.js"></script>
+    <script src="shared.js"></script>
+    <script src="batch.js"></script>
+</div>
+
+
+</body>
+</html>

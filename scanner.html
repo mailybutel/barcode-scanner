@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.rawgit.com/serratus/quaggaJS/0420d5e0/dist/quagga.min.js"></script>
+    <style>
+        /* In order to place the tracking correctly */
+        canvas.drawing, canvas.drawingBuffer {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+    <!-- Link css file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Link fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&family=Open+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Link MDL styling -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!-- Link google fonts for icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+    <!-- Div to show the scanner -->
+    <div id="scanner-container"></div>
+    <div id="result">
+        Code:
+        <div class="dialog-line mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="scanned-code">
+            <label class="mdl-textfield__label" for="scanned-code">Enter Code Manually Here Or Scan...</label>
+        </div>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="startScanner()">Rescan</button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="addBarcode()">Confirm</button>
+    </div>
+</body>
+
+<script src="shared.js"></script>
+<script src="scanner.js"></script>
+</html>

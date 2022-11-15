@@ -2,6 +2,7 @@
 
 /* Local Storage Keys */
 const BATCH_KEY = "batchData";
+const BATCH_INDEX = "batchIndex";
 
 class BatchBacklog{
     /**
@@ -19,7 +20,6 @@ class BatchBacklog{
     delete(batchIndex){ this._batches.splice(batchIndex, 1); }
 
     fromData(data){
-        console.log(data);
         for (let i = 0; i < data._batches.length; i++) {
             let batch = new Batch();
             batch.fromData(data._batches[i]);
@@ -48,6 +48,7 @@ class Batch{
     get barcodes(){ return this._barcodes; }
     get name(){ return this._name; }
     set name(newName){ this._name = newName; }
+    delete(codeIndex){ this._barcodes.splice(codeIndex, 1); }
 
     fromData(data){
         this.name = data._name;
@@ -118,8 +119,14 @@ function updateLSData(key, data) {
 }
 
 let batchBacklog = new BatchBacklog();
+let batchIndex = 0;
+
 if (checkLSData(BATCH_KEY)) {
     let data = retrieveLSData(BATCH_KEY);
     // Restore data into vacationList
     batchBacklog.fromData(data);
+}
+if (checkLSData(BATCH_INDEX)) {
+    // Restore data into vacationList
+    batchIndex = retrieveLSData(BATCH_INDEX);
 }
