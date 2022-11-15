@@ -8,21 +8,21 @@ class BatchBacklog{
      * Represents a list of batches
      */
 
-    #_batches;
     constructor() {
-        this.#_batches = [];
+        this._batches = [];
     }
 
-    get batches(){ return this.#_batches; }
+    get batches(){ return this._batches; }
+    set batches(batchList){ this._batches = batchList; }
 
-    addBatch(batch){
-        this.#_batches.add(batch);
-    }
+    addBatch(batch){ this._batches.push(batch); }
+    delete(batchIndex){ this._batches.splice(batchIndex, 1); }
 
     fromData(data){
-        for (let i = 0; i < data.batches.length; i++) {
+        console.log(data);
+        for (let i = 0; i < data._batches.length; i++) {
             let batch = new Batch();
-            batch.fromData(data.batches[i]);
+            batch.fromData(data._batches[i]);
             this.addBatch(batch);
         }
     }
@@ -32,11 +32,9 @@ class Batch{
     /**
      * Represents a list of barcodes
      */
-    #_barcodes;
-    #_name;
     constructor(name) {
-        this.#_barcodes = [];
-        this.#_name = name;
+        this._barcodes = [];
+        this._name = name;
     }
 
     /**
@@ -44,45 +42,43 @@ class Batch{
      * @param barcode {Barcode} the new barcode
      */
     addBarcode(barcode){
-        this.#_barcodes.add(barcode);
+        this._barcodes.push(barcode);
     }
 
-    get barcodes(){ return this.#_barcodes; }
-    get name(){ return this.#_name; }
-    set name(newName){ this.#_name = newName; }
+    get barcodes(){ return this._barcodes; }
+    get name(){ return this._name; }
+    set name(newName){ this._name = newName; }
 
     fromData(data){
-        this.name = data.name;
-        for (let i = 0; i < data.barcodes.length; i++) {
+        this.name = data._name;
+        for (let i = 0; i < data._barcodes.length; i++) {
             let barcode = new Barcode();
-            barcode.fromData(data.barcodes[i]);
+            barcode.fromData(data._barcodes[i]);
             this.addBarcode(barcode);
         }
     }
 }
 
 class Barcode{
-    #_data;
-    #_format;
     /**
      * Represents a scanned barcode
      * @param data {Number} the data the barcode holds
      * @param format {String} the format of the barcode
      */
     constructor(data, format) {
-        this.#_data = data;
-        this.#_format = format;
+        this._data = data;
+        this._format = format;
     }
 
-    get data(){ return this.#_data; }
-    set data(newData){ this.#_data = newData; }
+    get data(){ return this._data; }
+    set data(newData){ this._data = newData; }
 
-    get format(){ return this.#_format; }
-    set format(newFormat){ this.#_format = newFormat; }
+    get format(){ return this._format; }
+    set format(newFormat){ this._format = newFormat; }
 
     fromData(data){
-        this.data = data.data;
-        this.format = data.format;
+        this.data = data._data;
+        this.format = data._format;
     }
 }
 
@@ -94,7 +90,6 @@ class Barcode{
  */
 function checkLSData(key) {
     return localStorage.getItem(key) != null;
-
 }
 /**
  * retrieveLSData function
