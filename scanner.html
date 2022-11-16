@@ -29,17 +29,18 @@
 </head>
 
 <body>
-    <!-- Div to show the scanner -->
-    <div id="scanner-container"></div>
-    <div id="result">
-        Code:
-        <div class="dialog-line mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="scanned-code">
-            <label class="mdl-textfield__label" for="scanned-code">Enter Code Manually Here Or Scan...</label>
+        <span class="arrow-back material-icons" onclick="back()">arrow_back</span>
+        <div id="scanner-container"></div>
+        <div id="result">
+            Code:
+            <div class="dialog-line mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="scanned-code">
+                <label class="mdl-textfield__label" for="scanned-code">Enter Code Manually Here Or Scan...</label>
+            </div>
+            <button type="button" class="button-coloured mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="startScanner()">Scan</button>
+            <button type="button" class="button-coloured mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="addBarcode()">Confirm</button>
+            <div id="confirmed-toast"></div>
         </div>
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="startScanner()">Rescan</button>
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="addBarcode()">Confirm</button>
-    </div>
 </body>
 
 <script src="shared.js"></script>

@@ -15,15 +15,16 @@
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <!-- Link google fonts for icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.3/JsBarcode.all.min.js"></script>
 </head>
 
 <body>
-<!-- NAVIGATION -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header>
         <div class="nav mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--2-offset-desktop mdl-cell--6-col-tablet mdl-cell--1-offset-tablet">
-                <a id="batch-name" class="name-logo font-bold font-italics" href="#">Barcode Scanner</a>
+                <span class="arrow-back material-icons" onclick="back()">arrow_back</span>
+                <a id="batch-name" class="name-logo font-bold font-italics" href="index.html">Barcode Scanner</a>
             </div>
         </div>
     </header>
@@ -50,30 +51,18 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- dialog box for adding sprints -->
-                <dialog class="mdl-dialog">
-                    <div class="mdl-dialog__content">
-                        <div class="dialog-line mdl-textfield">
-                            <label class="mdl-typography--title">New Batch</label>
-                        </div>
-                        <!-- Name input -->
-                        <div class="dialog-line mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="batchName">
-                            <label class="mdl-textfield__label" for="batchName">Name*...</label>
-                            <span id="batchNameError" class="mdl-textfield__error">Name required</span>
-                        </div>
-                        <div>
-                            <!-- Buttons to cancel or save -->
-                            <div class="dialog-buttons">
-                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="closeDialog()">Cancel</button>
-                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="createBatch()">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </dialog>
-
             </div>
+
+            <!-- popup content -->
+            <div id="popup-images">
+                <div id="bg-overlay" onclick="hideBarcode()"></div>
+                <div id="inner-body">
+                    <span id="img-back" class="material-icons">arrow_back_ios</span>
+                    <svg id="barcode"></svg>
+                    <span id="img-next" class="material-icons">arrow_forward_ios</span>
+                </div>
+            </div>
+
         </div>
 
     </main>

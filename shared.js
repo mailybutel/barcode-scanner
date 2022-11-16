@@ -10,7 +10,7 @@ class BatchBacklog{
      */
 
     constructor() {
-        this._batches = [];
+        this.batches = [];
     }
 
     get batches(){ return this._batches; }
@@ -33,8 +33,8 @@ class Batch{
      * Represents a list of barcodes
      */
     constructor(name) {
-        this._barcodes = [];
-        this._name = name;
+        this.barcodes = [];
+        this.name = name;
     }
 
     /**
@@ -47,6 +47,7 @@ class Batch{
 
     get barcodes(){ return this._barcodes; }
     get name(){ return this._name; }
+    set barcodes(barcodeList){ this._barcodes = barcodeList; }
     set name(newName){ this._name = newName; }
     delete(codeIndex){ this._barcodes.splice(codeIndex, 1); }
 
@@ -67,19 +68,27 @@ class Barcode{
      * @param format {String} the format of the barcode
      */
     constructor(data, format) {
-        this._data = data;
-        this._format = format;
+        this.data = data;
+        this.format = format;
     }
 
     get data(){ return this._data; }
     set data(newData){ this._data = newData; }
 
     get format(){ return this._format; }
-    set format(newFormat){ this._format = newFormat; }
+    set format(newFormat){
+        if(newFormat === "ean_13"){
+            this._format = "EAN13";
+        } else if(newFormat === "ean_8") {
+            this._format = "EAN8";
+        } else {
+            this._format = "CODE128";
+        }
+    }
 
     fromData(data){
         this.data = data._data;
-        this.format = data._format;
+        this._format = data._format;
     }
 }
 

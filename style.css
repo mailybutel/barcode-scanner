@@ -74,10 +74,136 @@ i.material-icons{
 
 #scanner-container{
     position: absolute;
-    margin: 50px 7px;
+    margin: 20px 7px;
 }
 
+/**/
 #result{
     position: absolute;
     margin-left: 20px;
+}
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#confirmed-toast {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: rgba(0, 106, 106, 0.5); /* Black background color */
+    color: black; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 5px; /* Rounded borders */
+    padding: 5px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 10px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#confirmed-toast.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 10px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 10px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 20px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 10px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+/*colour back arrows*/
+span.arrow-back{
+    color: rgb(0, 106, 106);
+    margin-top: 10px;
+}
+
+/*colour buttons in barcode scanning page*/
+div#result button.button-coloured{
+    background-color: rgb(0, 106, 106);
+}
+
+/*styling for div containing barcode image*/
+.popup-images {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+}
+
+/*styling of overlay*/
+#bg-overlay {
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    background:#000;
+    opacity:0;
+    visibility: hidden;
+}
+
+/*make overlay visible to block out rest of screen*/
+#bg-overlay.show-barcode{
+    visibility: visible;
+    opacity: 0.9;
+    transition: opacity 0.5s;
+}
+
+/*styling of barcode background*/
+#inner-body{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    visibility: hidden;
+}
+
+/*make the barcode background visible*/
+#inner-body.show-barcode{
+    visibility: visible;
+}
+
+/*styling for barcode image*/
+#barcode{
+    box-shadow: 0 0 20px rgba(0, 106, 106, 0.25);
+    width: 300px;
+    margin: 30px 0 30px 0;
+    z-index: 1;
+    visibility: hidden;
+}
+
+/*make the barcode image visible*/
+#barcode.show-barcode{
+    visibility: visible;
+}
+
+/*disabled arrows are greyed out*/
+span[disabled]{
+    color: gray;
+    opacity: 0.8;
+    pointer-events: none;
 }

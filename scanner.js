@@ -1,4 +1,5 @@
 let _scannerIsRunning = false;
+let format = "";
 
 function startScanner() {
     Quagga.init({
@@ -52,23 +53,35 @@ function startScanner() {
         }
     });
 
+    // When a barcode is detected, pause the video stream and stop the barcode scanning. Save the results
     Quagga.onDetected(function (result) {
-        console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
+        console.log("Barcode detected and processed : [" + result.codeResult.format + "]", result);
+        let cameraFeed = document.getElementById("scanner-container");
+        cameraFeed.getElementsByTagName("video")[0].pause();
         Quagga.stop();
         document.getElementById("scanned-code").parentElement.classList.add("is-dirty");
         document.getElementById("scanned-code").value = `${result.codeResult.code}`;
+        format = result.codeResult.format;
     });
 }
 
-document.getElementById("result").style.top = (window.innerHeight*2/3 + 80) + "px";
+document.getElementById("result").style.top = (window.innerHeight*2/3 + 60) + "px";
 startScanner();
 
-// document.getElementById("scanned-code").addEventListener(onclick({
-//     Quagga.stop();
-// }))
-
+/**
+ * Add the code to local storage and show a confirmation popup
+ */
 function addBarcode(){
-    let code = new Barcode(document.getElementById("scanned-code").value, "ean_13");
+    let code = new Barcode(document.getElementById("scanned-code").value, format);
     batchBacklog.batches[batchIndex].addBarcode(code);
     updateLSData(BATCH_KEY, batchBacklog);
+    let toast = document.getElementById("confirmed-toast");
+    toast.innerText = `Barcode ${document.getElementById("scanned-code").value} added.`
+    toast.classList.add("show");
+    setTimeout(function (){ toast.classList.remove("show"); }, 3000);
 }
+
+/**
+ * Go back to Batch page
+ */
+function back(){ window.location.href = "batch.html"; }
